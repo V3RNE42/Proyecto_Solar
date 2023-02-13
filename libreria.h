@@ -23,15 +23,9 @@ bool izqda (bool AMS, bool NaS, bool sol) {
             NaS - Norte a Sur: True-Dirección Norte a Sur, False-Dirección Sur a Norte
             sol - True: el usuario quiere sol, False: el usuario quiere sombra*/ 
     bool IZQDA=true;
-    if (!AMS) {
-        IZQDA=!IZQDA;
-    }
-    if (!sol) {
-        IZQDA=!IZQDA;
-    }
-    if (!NaS) {
-        IZQDA=!IZQDA;
-    }
+    if (!AMS) IZQDA=!IZQDA;
+    if (!sol) IZQDA=!IZQDA;
+    if (!NaS) IZQDA=!IZQDA;
     return IZQDA;
 };
 bool AMS (int horasalida, int minutosalida,
@@ -40,16 +34,9 @@ bool AMS (int horasalida, int minutosalida,
     int mediodia=leemediodia(ano, mes, dia);
     int llegada=minutero(horallegada, minutollegada);
     int salida=minutero(horasalida, minutosalida);
-    if (llegada<mediodia) {
-        return true;
-    } else if (salida>mediodia) {
-        return false;
-    }
-    if ((mediodia-salida)>(llegada-mediodia)) {
-        return true;
-    } else {
-        return false;
-    }
+    if (llegada<mediodia) return true;
+    if (salida>mediodia)  return false;
+    return (mediodia-salida)>(llegada-mediodia);
 };
 int minutero (int hora, int minuto) {
     return (hora*60)+minuto;
@@ -79,11 +66,7 @@ int leeciudad (string ciudad) {
 };
 /* Aqui comparamos */
 bool NaS (int ciudad1, int ciudad2) {
-    if (ciudad1<ciudad2) {
-        return true;
-    } else {
-        return false;
-    }
+    return ciudad1<ciudad2;
 };
 /* La siguiente función determina si tiene sentido continuar con todo el proceso, 
 o si por el contrario podemos decirle al usuario que no se preocupe,
@@ -95,11 +78,7 @@ bool continuar (int horasalida, int minutosalida,
     int llegada=minutero(horallegada, minutollegada);
     int amanecer=leeamanecer(ano, mes, dia);
     int anochecer=leeanochecer(ano, mes, dia);
-    if (llegada<amanecer || salida>anochecer) {
-        return true;
-    } else {
-        return false;
-    }
+    return llegada<amanecer || salida>anochecer;
 };
 /* Las siguientes funciones obtienen las horas requeridas del fichero */
 int leeamanecer (int ano, int mes, int dia) {
